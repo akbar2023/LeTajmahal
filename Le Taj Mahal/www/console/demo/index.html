@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <link rel="stylesheet" type="text/css" href="../styles/jquery.modallink-1.0.0.css" />
+    </head>
+
+    <body>
+
+        <h2>Basic usage</h2>
+        <a href="page1.html" class="modal-link">Open i-frame</a>
+        <pre>
+$(".modal-link").modalLink();
+        </pre>
+
+
+        <h2>Open link with additional data</h2>
+        <a href="Page1.html" class="modal-link-with-data">Open modal in i-frame with additional GET data</a>
+        <pre>
+$(".modal-link-with-data").modalLink({
+    data: {
+        foo: "bar"
+    }
+});
+        </pre>
+
+
+        <h2>Open link with additional data with POST</h2>
+        <a href="Page1.html" class="modal-link-posting-data">POST data to i-frame</a>
+        <pre>
+$(".modal-link-posting-data").modalLink({
+    method: "POST",
+    data: {
+        foo: "bar"
+    }
+});
+        </pre>
+
+
+        <h2>Open in script</h2>
+        <button class="btn-click-me">click me</button>
+        <pre>
+$(".btn-click-me").click(function () {
+    $.modalLink.open("Page1.html", {
+        title: "Title"
+    });
+});
+        </pre>
+
+        <h2>Open unbound link in modal</h2>
+
+        <pre>
+$.modalLink("open", $link);
+        </pre>
+
+        <h2>Open referenced content in modal link</h2>
+
+        <p>
+            This will append referenced item into modal window. On close, content will be placed back to main window.
+            This is useful when you want to edit form data in modal window.
+        </p>
+
+        <a href="#ref-content" class="btn-ref">REF</a>
+
+        <div id="ref-content">
+            <input type="text" />
+        </div>
+
+        <pre>
+$(".btn-ref").click(function (e) {
+    e.preventDefault();
+    $.modalLink("open", $(".btn-ref"), {
+        title: "REF demo - type something in textbox and close window"
+    });
+});
+        </pre>
+
+        <h2>Submit form into modal window</h2>
+        <form action="page2.html" class="post-data-to-iframe">
+
+            <input type="text" name="test" />
+
+            <button type="submit">Post to i-frame</button>
+        </form>
+
+
+        <h2>Close modal window inside modal</h2>
+
+        <pre>
+(function (w) {
+    $(".close-modal").click(function () {
+        w.$.modalLink("close");
+    });
+})(window.parent);
+        </pre>
+
+        <h2>Close modal with callback</h2>
+
+        TBD
+
+        <h2>Methods<h2>
+
+        <h3>open</h3>
+        <h3>close</h3>
+
+        <h2>Events</h2>
+
+        <h3>modallink.close</h3>
+
+        <h2>Options</h2>
+        <ul>
+            <li>width - modal window content width</li>
+            <li>height - modal window content height</li>
+            <li>
+                method
+                <ul>
+                    <li>REF</li>
+                    <li>CLONE</li>
+                    <li>GET</li>
+                    <li>POST</li>
+                </ul>
+            </li>
+            <li>data</li>
+            <li>showTitle</li>
+            <li>showClose</li>
+            <li>overlayOpacity</li>
+            <li>$form</li>
+            <li>onHideScroll</li>
+        </ul>
+
+
+        <h2>Styling</h2>
+
+        <ul>
+            <li>
+                .sparkling-modal-container
+            </li>
+            <li>
+                .sparkling-modal-overlay
+            </li>
+            <li>
+                .sparkling-modal-frame
+            </li>
+            <li>
+                .sparkling-modal-title
+            </li>
+            <li>
+                .sparkling-modal-title span
+            </li>
+            <li>
+                .sparkling-modal-close
+            </li>
+            <li>
+                .sparkling-modal-content
+            </li>
+        </ul>
+
+        <h2>Templates</h2>
+        TBD
+
+        <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script type="text/javascript" src="../js/jquery.modalLink-1.0.0.js"></script>
+
+        <script type="text/javascript">
+
+            (function () {
+                $(".modal-link").modalLink();
+
+                $(".modal-link-with-data").modalLink({
+                    data: {
+                        foo: "bar"
+                    }
+                });
+
+                $(".modal-link-posting-data").modalLink({
+                    method: "POST",
+                    data: {
+                        foo: "bar"
+                    }
+                });
+
+                $(".btn-click-me").click(function () {
+                    $.modalLink.open("Page1.html", {
+                        title: "Title"
+                    });
+                });
+
+                $(".btn-ref").click(function (e) {
+                    e.preventDefault();
+                    $.modalLink("open", $(".btn-ref"), {
+                        title: "REF demo - type something in textbox and close window"
+                    });
+                });
+
+                $(".post-data-to-iframe").submit(function (e) {
+                   e.preventDefault();
+                   var $form = $(this);
+                   if ($form.data("submitted-from-modallink")) {
+                       $form.data("submitted-from-modallink", false);
+                       return;
+                   }
+
+                   var url = $form.attr("action");
+                   $.modalLink.open(url, {
+                       $form: $form,
+                       title: "Posting form to modal window demo",
+                       method: "POST"
+                   })
+                });
+            })();
+
+        </script>
+
+    </body>
+
+</html>

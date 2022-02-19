@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+    </head>
+    
+    <body>
+        
+        <h1>Page 1</h1>
+        
+        im in iframe
+        
+        <button class="close-modal">Close</button>
+        
+        <script type="text/javascript" src="../lib/jquery-2.2.4.min.js"></script>
+        <script type="text/javascript">
+        (function (w) {
+            $(".close-modal").click(function () {
+                w.$.modalLink("close");
+            });
+        })(window.parent);
+        </script>
+    </body>
+    
+</html>
